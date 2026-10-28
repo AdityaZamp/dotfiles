@@ -16,11 +16,12 @@ A duplicate ticket is worse than asking me, so a new ticket is the last resort. 
 3. **Ids in plain sight.** A ticket id in what I said, the branch name, the commit messages since the base branch, or the open PR's title or body (`gh pr view --json title,body`).
 4. **My open tickets.** `list_issues` with `assignee: "me"`, once with `state: "started"` and once with `state: "unstarted"`, `limit: 100`. Read every title. The list is short, and reading it is more reliable than search.
 5. **Recent creations.** `list_issues` with `creator: "me"`, `createdAt: "-P14D"`. This catches a ticket an earlier session created under different wording.
-6. **Search.** Run `list_issues` with no team filter, once with `assignee: "me"` and once with `team: "PRO"` and no assignee, each with `query:` set to two or three key words from the work. Then repeat with a second phrasing (a synonym, or the component or route name). The search is fuzzy: "accessible" missed a ticket titled "...screen reader accessible" that "screen reader" found first. Include every state except `Canceled` and `Duplicate`.
+6. **Search.** Run `list_issues` three times: with `assignee: "me"` and no team filter, with `team: "PRO"` and no assignee, and with neither filter (catches another team's ticket assigned to someone else). Set `query:` to two or three key words from the work each time. Then repeat with a second phrasing (a synonym, or the component or route name). The search is fuzzy: "accessible" missed a ticket titled "...screen reader accessible" that "screen reader" found first. Include every state except `Canceled` and `Duplicate`.
 
 Judge each result by whether its title or description describes the same change, not by shared words alone. Then:
 
-- **Exactly one match** that is open: use it.
+- **Exactly one match** that is open and assigned to me or unassigned: use it.
+- **A match assigned to someone else**: they may already be on it. Show me its id, title, status and assignee, and ask me to confirm with that person whether to share it, take it over, or open a separate ticket. Ask once per piece of work, and create or reassign nothing until I answer.
 - **A match that is `Done`**: ask me whether this is a follow-up (new ticket, `relatedTo` the old one) or a reopen.
 - **Several plausible matches, or one you are unsure of**: list them with id, title and status, and ask me which. Create nothing until I answer.
 - **Nothing plausible after all six checks**: go to step 2.
