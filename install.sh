@@ -21,21 +21,3 @@ for kind in rules skills agents; do
     link "$src" "$HOME/.claude/$kind/$(basename "$src")"
   done
 done
-
-# A few of Matt Pocock's skills (github.com/mattpocock/skills), the ones superpowers has no equivalent for.
-MATT="$HOME/.cache/mattpocock-skills"
-if [ -d "$MATT/.git" ]; then
-  git -C "$MATT" pull -q --ff-only || echo "could not update $MATT, keeping the current copy"
-else
-  git clone -q --depth 1 https://github.com/mattpocock/skills.git "$MATT"
-fi
-for skill in \
-  engineering/to-spec \
-  engineering/to-tickets \
-  engineering/prototype \
-  engineering/research \
-  engineering/codebase-design \
-  productivity/handoff \
-  productivity/writing-for-agents; do
-  link "$MATT/skills/$skill" "$HOME/.claude/skills/$(basename "$skill")"
-done
