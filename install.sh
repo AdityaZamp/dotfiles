@@ -21,3 +21,12 @@ for kind in rules skills agents; do
     link "$src" "$HOME/.claude/$kind/$(basename "$src")"
   done
 done
+
+# Superpowers plugin, so every session starts with its skills. Both commands are no-ops when already done.
+if command -v claude >/dev/null; then
+  claude plugin marketplace add anthropics/claude-plugins-official </dev/null >/dev/null &&
+    claude plugin install superpowers@claude-plugins-official </dev/null >/dev/null ||
+    echo "could not install the superpowers plugin"
+else
+  echo "claude not on PATH, skipping the superpowers plugin"
+fi
